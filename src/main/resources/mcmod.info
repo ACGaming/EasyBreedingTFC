@@ -1,21 +1,22 @@
 [
-{
-  "modid": "easybreeding",
-  "name": "EasyBreeding",
-  "description": "",
-  "version": "4.0.1",
-  "url": "",
-  "updateUrl": "",
-  "authorList": [
-    "Icynewyear",
-    "Gigabit101"
-  ],
-  "credits": "",
-  "logoFile": "",
-  "screenshots": [
-  ],
-  "parent":"",
-  "dependencies": [
-  ]
-}
+  {
+    "modid": "easybreedingtfc",
+    "name": "EasyBreedingTFC",
+    "description": "",
+    "version": "1.0.0",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "ACGaming",
+      "Icynewyear",
+      "Gigabit101"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [
+    ],
+    "parent": "",
+    "dependencies": [
+    ]
+  }
 ]
