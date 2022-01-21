@@ -1,28 +1,31 @@
-package mod.acgaming.easybreedingtfc;
+package mod.acgaming.easybreedingtfc.ai;
 
 import java.util.List;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 import net.dries007.tfc.objects.entity.animal.EntityAnimalTFC;
 
-public class EntityAIEatDroppedFood extends EntityAIBase
+import static mod.acgaming.easybreedingtfc.config.EBConfig.searchDistance;
+
+public class EBEntityAI extends EntityAIBase
 {
     private final EntityAnimalTFC animal;
     private final World world;
-    double searchDistance = 10;
 
-    public EntityAIEatDroppedFood(EntityAnimalTFC animal)
+    public EBEntityAI(EntityAnimalTFC animal)
     {
         this.animal = animal;
         this.world = animal.world;
     }
 
-    public EntityItem whatFoodIsNear()
+    public EntityItem checkFood()
     {
         List<EntityItem> items = getItems();
         for (EntityItem item : items)
@@ -34,7 +37,7 @@ public class EntityAIEatDroppedFood extends EntityAIBase
 
     public boolean shouldExecute()
     {
-        EntityItem closeFood = whatFoodIsNear();
+        EntityItem closeFood = checkFood();
         if ((closeFood != null) && (this.animal.isBreedingItem(closeFood.getItem())))
         {
             if (this.animal.isReadyToMate())
@@ -43,7 +46,7 @@ public class EntityAIEatDroppedFood extends EntityAIBase
             }
             else if (this.animal.isHungry())
             {
-                //TO DO
+                // TO DO
             }
         }
         return false;
@@ -55,17 +58,18 @@ public class EntityAIEatDroppedFood extends EntityAIBase
         {
             if (animal.getDistance(item) < 1.0F)
             {
-                eatOne(item);
+                consumeFood(item);
                 animal.setInLove(null);
             }
         }
     }
 
-    public void eatOne(EntityItem item)
+    public void consumeFood(EntityItem item)
     {
         ItemStack stack = item.getItem();
         stack.setCount(stack.getCount() - 1);
         if (stack.getCount() == 0) item.setDead();
+        this.world.playSound(item.posX, item.posY, item.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
     }
 
     List<EntityItem> getItems()
