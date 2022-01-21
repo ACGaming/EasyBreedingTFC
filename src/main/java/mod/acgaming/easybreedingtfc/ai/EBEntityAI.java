@@ -38,16 +38,18 @@ public class EBEntityAI extends EntityAIBase
     public boolean shouldExecute()
     {
         EntityItem closeFood = checkFood();
-        if ((closeFood != null) && (this.animal.isBreedingItem(closeFood.getItem())))
+        if ((closeFood != null) && (this.animal.isFood(closeFood.getItem())))
         {
             if (this.animal.isReadyToMate())
             {
                 execute(this.animal, closeFood);
             }
+            /*
             else if (this.animal.isHungry())
             {
                 // TO DO
             }
+            */
         }
         return false;
     }
@@ -69,7 +71,7 @@ public class EBEntityAI extends EntityAIBase
         ItemStack stack = item.getItem();
         stack.setCount(stack.getCount() - 1);
         if (stack.getCount() == 0) item.setDead();
-        this.world.playSound(item.posX, item.posY, item.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+        this.world.playSound(null, item.getPosition(), SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.AMBIENT, 1.0F, 1.0F);
     }
 
     List<EntityItem> getItems()
